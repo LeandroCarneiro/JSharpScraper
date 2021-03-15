@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using VetScraper.Domain;
 
 namespace VetScraper.DataCollector.Sources
@@ -19,13 +20,13 @@ namespace VetScraper.DataCollector.Sources
         {
             baseUrl = "https://www.1800petmeds.com/vetdirectory?";
             var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArguments("headless", "disable-gpu", "no-sandbox");
+            //chromeOptions.AddArguments("headless", "disable-gpu", "no-sandbox");
             var service = ChromeDriverService.CreateDefaultService(AppDomain.CurrentDomain.BaseDirectory);
             driver = new ChromeDriver(service, chromeOptions);
             js = (IJavaScriptExecutor)driver;
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             recordsPerPage = 50;
-            maximumAttempts = 3;
+            maximumAttempts = 10;
         }
 
         public void Dispose()
@@ -42,17 +43,27 @@ namespace VetScraper.DataCollector.Sources
         {
             List<VetClinic> response = new List<VetClinic>();
 
-            if (attempt == maximumAttempts)
+            if (attempt > maximumAttempts)
             {
+                Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine("Maximum of attempts reached. Finishing page execution.");
                 return response;
             }
 
-            driver.Navigate().GoToUrl(GetUrl(currentPage));
+            driver.Manage().Cookies.DeleteAllCookies();
+
+            string url = GetUrl(currentPage);
+            Console.WriteLine("Navigating to url: " + url);
+
+            driver.Navigate().GoToUrl(url);
+
             string noResultsDisplay = driver.FindElement(By.ClassName("store-locator-no-results"))?.GetCssValue("display");
             if (noResultsDisplay != "none")
             {
+                Console.WriteLine("----------------------------------------------------------------");
                 Console.WriteLine($"Re-trying to process page {currentPage + 1}. Attempt: {attempt}.");
+                // waits a few seconds before re-trying
+                Thread.Sleep(5000);
                 return ProcessPage(currentPage, attempt + 1);
             }
 
@@ -88,7 +99,7 @@ namespace VetScraper.DataCollector.Sources
 
             return baseUrl + (
                   currentPage == 0 ? "horizontalView=true" :
-                  $"startingPage={startingPage}&horizontalView=true&pageChange=true"
+                  $"postalCode=20149&startingPage={startingPage}&horizontalView=true&pageChange=true"
                 );
         }
     }

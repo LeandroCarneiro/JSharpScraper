@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VetScraper.Repository;
+using VetScraper.Repository.MongoRepositories;
 
 namespace VetScraper.API
 {
@@ -26,6 +28,10 @@ namespace VetScraper.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSingleton(new DatabaseConfig() { ConnectionString = Configuration["ConnectionStrings:Default"] });
+
+            services.AddScoped<IVetClinicRepository, MongoVetClinicRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

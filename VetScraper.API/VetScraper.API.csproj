@@ -10,5 +10,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VetScraper.Data\VetScraper.Domain.csproj" />
+    <ProjectReference Include="..\VetScraper.Repository\VetScraper.Repository.csproj" />
+  </ItemGroup>
+
 
 </Project>

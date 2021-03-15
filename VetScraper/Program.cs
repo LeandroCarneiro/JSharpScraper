@@ -14,8 +14,8 @@ namespace VetScraper
         static void Main(string[] args)
         {
             IList<VetClinic> processedEntries = new List<VetClinic>();
-            IVetClinicRepository repo = new MongoVetClinicRepository("mongodb://localhost:27017/");
-            int totalEntries = 0, currentPage = 0;
+            IVetClinicRepository repo = new MongoVetClinicRepository(new DatabaseConfig() { ConnectionString = "mongodb://localhost:27017/" });
+            int totalEntries = 0, currentPage = 13;
 
             using (var scraper = GetPetMedsScraper())
             {
@@ -28,16 +28,20 @@ namespace VetScraper
                         repo.SaveClinics(processedEntries).GetAwaiter().GetResult();
                         totalEntries += processedEntries.Count;
                         Console.WriteLine($"{processedEntries.Count} entries processed on page {currentPage + 1}. {totalEntries} entries processed so far.");
-                        currentPage++;
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Error processing page number {currentPage + 1}. Exception: {ex.Message}");
                     }
+                    finally
+                    {
+                        currentPage++;
+                    }
 
                 } while (processedEntries.Any());
             }
 
+            Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine($"A total of {totalEntries} entries have been processed.");
             Console.Read();
         }

@@ -11,9 +11,9 @@ namespace VetScraper.Repository.MongoRepositories
     {
         private readonly IMongoCollection<VetClinic> collection;
 
-        public MongoVetClinicRepository(string connectionString)
+        public MongoVetClinicRepository(DatabaseConfig config)
         {
-            var client = new MongoClient(connectionString);
+            var client = new MongoClient(config.ConnectionString);
             var database = client.GetDatabase("vetScraper");
             collection = database.GetCollection<VetClinic>("vetClinic");
         }
