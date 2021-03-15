@@ -15,7 +15,7 @@ namespace VetScraper
         {
             IList<VetClinic> processedEntries = new List<VetClinic>();
             IVetClinicRepository repo = new MongoVetClinicRepository(new DatabaseConfig() { ConnectionString = "mongodb://localhost:27017/" });
-            int totalEntries = 0, currentPage = 13;
+            int totalEntries = 0, currentPage = 0;
 
             using (var scraper = GetPetMedsScraper())
             {
