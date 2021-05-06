@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.Selenium", "JSharpScraper.Selenium\JSharpScraper.Selenium.csproj", "{0043EB20-C6E3-49DB-8863-1125458DF887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.Console", "JSharpScraper\JSharpScraper.Console.csproj", "{A6548FF8-ECEA-46B6-B1CC-B713200E43F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.Console", "JSharpScraper.Console\JSharpScraper.Console.csproj", "{A6548FF8-ECEA-46B6-B1CC-B713200E43F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{D337C432-43F3-4FC1-A14F-4A99A488A6FB}"
 EndProject
