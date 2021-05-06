@@ -4,17 +4,27 @@ using JSharpScraper.Selenium.Scrapers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace JSharpScraper.Console
+namespace JSharpScraper.App
 {
-    public class Startup
+    public static class Startup
     {
+        private static IServiceCollection _container;
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
              Host.CreateDefaultBuilder(args)
                  //Dependency Injection :)
                  .ConfigureServices((_, services) => 
-                 services
+                 _container =  services
                     .AddTransient<IScraper, NavagateScraper>()
                     .AddTransient<ScraperAppService>()
                  );
+
+        public static T Resolve<T>()
+        {
+            var serviceProvider = _container.BuildServiceProvider();
+            var service = serviceProvider.GetService<T>();
+
+            return service;
+        }
     }
 }
