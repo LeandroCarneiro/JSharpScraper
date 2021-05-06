@@ -2,6 +2,7 @@
 {
     public interface IScraper
     {
-        string FindJob(string url, string jobKey);
+        void Setup(string baseUrl, string jobKey);
+        string Navagate();
     }
 }

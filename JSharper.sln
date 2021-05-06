@@ -5,13 +5,15 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{210BB267-CB7E-48B5-95E8-763C81DBB9DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.Selenium", "JSharpScraper.Selenium\JSharpScraper.Selenium.csproj", "{0043EB20-C6E3-49DB-8863-1125458DF887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSharpScraper.Selenium", "JSharpScraper.Selenium\JSharpScraper.Selenium.csproj", "{0043EB20-C6E3-49DB-8863-1125458DF887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.Console", "JSharpScraper.Console\JSharpScraper.Console.csproj", "{A6548FF8-ECEA-46B6-B1CC-B713200E43F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSharpScraper.Console", "JSharpScraper.Console\JSharpScraper.Console.csproj", "{A6548FF8-ECEA-46B6-B1CC-B713200E43F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{D337C432-43F3-4FC1-A14F-4A99A488A6FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.AppService", "JSharpScraper.AppService\JSharpScraper.AppService.csproj", "{4C4AC0A0-DEB6-41E3-9611-AC4D0FB703E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JSharpScraper.AppService", "JSharpScraper.AppService\JSharpScraper.AppService.csproj", "{4C4AC0A0-DEB6-41E3-9611-AC4D0FB703E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSharpScraper.Common", "JSharpScraper.Common\JSharpScraper.Common.csproj", "{C86650FE-A141-4E6A-8DB5-66FEB4110B50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{4C4AC0A0-DEB6-41E3-9611-AC4D0FB703E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C4AC0A0-DEB6-41E3-9611-AC4D0FB703E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C4AC0A0-DEB6-41E3-9611-AC4D0FB703E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C86650FE-A141-4E6A-8DB5-66FEB4110B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C86650FE-A141-4E6A-8DB5-66FEB4110B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C86650FE-A141-4E6A-8DB5-66FEB4110B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C86650FE-A141-4E6A-8DB5-66FEB4110B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

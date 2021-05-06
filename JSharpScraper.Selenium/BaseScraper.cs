@@ -1,24 +1,27 @@
 ﻿using JSharpScraper.AppService.Interfaces;
+using JSharpScraper.Common.Exceptions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace JSharpScraper.Selenium
 {
     public abstract class BaseScraper : IScraper
     {
-        protected readonly IWebDriver _driver;
-        protected readonly IJavaScriptExecutor _js;
-        protected readonly string _baseUrl;
-        protected readonly int _recordsPerPage;
-        protected readonly int _maximumAttempts;
+        protected IWebDriver _driver;
+        protected IJavaScriptExecutor _js;
+        protected string _baseUrl;
+        protected string _jobKey;
+        protected int _recordsPerPage;
+        protected int _maximumAttempts;
         protected const string _funcGetByXPath = @"function getElementByXpath(path) {
                                                       return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
                                                     }
                                                    getElementByXpath(#path#);";
 
-        public BaseScraper(string baseUrl)
+        public void Setup(string baseUrl, string jobKey)
         {
             var chromeOptions = new ChromeOptions();
             
@@ -29,6 +32,8 @@ namespace JSharpScraper.Selenium
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             _recordsPerPage = 50;
             _maximumAttempts = 10;
+            _baseUrl = baseUrl;
+            _jobKey = jobKey;
         }
 
         public void Dispose()
@@ -60,16 +65,24 @@ namespace JSharpScraper.Selenium
             return _driver.FindElements(By.CssSelector(key));
         }
 
-
         public IReadOnlyCollection<IWebElement> FindByXPath(string key, IWebElement element = null)
         {
             var result = (IReadOnlyCollection<IWebElement>)_js.ExecuteScript(_funcGetByXPath.Replace("#path#",key));
             return result;
         }
 
-        public string FindJob(string url, string jobKey)
+        public abstract IWebElement FindJobPage(IWebElement element = null);
+        public abstract void FindJob(string jobKey);
+
+        public string Navagate()
         {
-            throw new NotImplementedException();
+            var btn = FindJobPage();
+            btn.Click();
+            
+            Thread.Sleep(5000);
+
+            FindJob(_jobKey);
+            return _driver.Url;
         }
     }
 }

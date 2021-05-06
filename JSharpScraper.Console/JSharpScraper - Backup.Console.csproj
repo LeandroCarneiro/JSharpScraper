@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JSharpScraper.AppService\JSharpScraper.AppService.csproj" />
-    <ProjectReference Include="..\JSharpScraper.Selenium\JSharpScraper.Selenium.csproj" />
   </ItemGroup>
 
 </Project>

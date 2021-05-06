@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JSharpScraper.AppService\JSharpScraper.AppService.csproj" />
+    <ProjectReference Include="..\JSharpScraper.Common\JSharpScraper.Common.csproj" />
   </ItemGroup>
 
 </Project>
