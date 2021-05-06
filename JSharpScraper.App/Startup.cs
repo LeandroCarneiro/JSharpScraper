@@ -13,11 +13,19 @@ namespace JSharpScraper.App
         public static IHostBuilder CreateHostBuilder(string[] args) =>
              Host.CreateDefaultBuilder(args)
                  //Dependency Injection :)
-                 .ConfigureServices((_, services) => 
-                 _container =  services
+                 .ConfigureServices((_, services) =>
+                 {
+                     services
                     .AddTransient<IScraper, NavagateScraper>()
-                    .AddTransient<ScraperAppService>()
-                 );
+                    .AddTransient<ScraperAppService>();
+
+                     _container = services;
+                 })
+                .ConfigureAppConfiguration((hostingContext, configuration) =>
+                 {
+                     configuration.Build();
+                 });
+
 
         public static T Resolve<T>()
         {
