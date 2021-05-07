@@ -4,6 +4,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace JSharpScraper.Selenium
@@ -18,14 +20,18 @@ namespace JSharpScraper.Selenium
         protected int _maximumAttempts;
         protected const string _funcGetByXPath = @"function getElementByXpath(path) {
                                                       return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                                                    }
-                                                   getElementByXpath(#path#);";
+                                                    }" + " var element = getElementByXpath(\"//a[normalize-space() = '#path#']\"); return element != null";
 
         public void Setup(string baseUrl, string jobKey)
         {
             var chromeOptions = new ChromeOptions();
-            
-            var service = ChromeDriverService.CreateDefaultService(AppDomain.CurrentDomain.BaseDirectory);
+
+            var current = Directory.GetCurrentDirectory();
+            var directories = Directory.GetParent(current)
+                .Parent.Parent.Parent.GetDirectories();
+            var config = directories.Where(x => x.FullName.Contains("JSharpScraper.App"))?.First()?.FullName;
+
+            var service = ChromeDriverService.CreateDefaultService(config.Replace("\\JSharpScraper.App", ""));
             _driver = new ChromeDriver(service, chromeOptions);
             
             _js = (IJavaScriptExecutor)_driver;
@@ -67,7 +73,9 @@ namespace JSharpScraper.Selenium
 
         public IReadOnlyCollection<IWebElement> FindByXPath(string key, IWebElement element = null)
         {
-            var result = (IReadOnlyCollection<IWebElement>)_js.ExecuteScript(_funcGetByXPath.Replace("#path#",key));
+            var search = _funcGetByXPath.Replace("#path#", key);
+            var result = _driver.FindElements(By.XPath("//a[contains(text(), '" + key + "')]"));
+
             return result;
         }
 
@@ -77,8 +85,8 @@ namespace JSharpScraper.Selenium
         public string Navagate()
         {
             var btn = FindJobPage();
-            btn.Click();
-            
+            _js.ExecuteScript("arguments[0].click();", btn);
+
             Thread.Sleep(5000);
 
             FindJob(_jobKey);

@@ -17,9 +17,10 @@ namespace JSharpScraper.App
 
                 var list = new List<string>()
                 {
-                    "https://www.epam.com/"
+                    "https://www.epam.com/",
+                    "https://www.avanade.com/"
                 };
-
+                Console.Clear();
                 foreach (var item in list)
                 {
                     try

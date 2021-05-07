@@ -1,5 +1,6 @@
 ﻿using JSharpScraper.Common.Exceptions;
 using OpenQA.Selenium;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JSharpScraper.Selenium.Scrapers
@@ -8,16 +9,26 @@ namespace JSharpScraper.Selenium.Scrapers
     {
         public override IWebElement FindJobPage(IWebElement element = null)
         {
-            var btns = FindByXPath("career");
-            if(btns != null && btns.Any())
+            _driver.Navigate().GoToUrl(_baseUrl);
+            var lst = new List<string>()
             {
-                foreach (var item in btns)
+                "Career",
+                "Careers",
+                "Jobs",
+                "Vacancies"
+            };
+            foreach (var item in lst)
+            {
+                var btns = FindByXPath(item);
+                if (btns != null && btns.Any())
                 {
-                    if (item.TagName == "a" || (item.TagName == "input" || item.GetAttribute("type") == "button") && element != item)
-                        return item;
+                    foreach (var btn in btns)
+                    {
+                        if (btn.TagName == "a" || (btn.TagName == "input" || btn.GetAttribute("type") == "button") && element != btn)
+                            return btn;
+                    }
                 }
             }
-
             throw new JobNotFoundException();
         }
     }   
